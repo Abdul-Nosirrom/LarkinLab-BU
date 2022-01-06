@@ -1,0 +1,3 @@
+[submodule "LarkinLab/vendor/spdlog"]
+	path = LarkinLab/vendor/spdlog
+	url = https://github.com/gabime/spdlog

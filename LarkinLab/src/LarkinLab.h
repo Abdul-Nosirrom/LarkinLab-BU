@@ -4,6 +4,7 @@
 
 #include <stdio.h>
 #include "LabCore/Application.h"
+#include "LabCore/Log.h"
 
 // -- Entry Point -- //
 #include "LabCore/EntryPoint.h"
