@@ -1,24 +1,26 @@
 workspace "LarkinLab"
 	architecture "x64"
+	startproject "Sandbox"
 
 	configurations
 	{
 		"Debug",
-		"Release",
-		"Dist"
+		"Release"	
 	}
 
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
 -- Include directories relative to root folder (solution directory)
-IncludeDir = {}
+IncludeDir = {} 
 IncludeDir["GLFW"] = "LarkinLab/vendor/GLFW/include"
 
 include "LarkinLab/vendor/GLFW"
 
+--------------------------------------------------------------------
+
 project "LarkinLab"
 	location "LarkinLab"
-	kind "SharedLib"
+	kind "SharedLib" -- Because project produces a dll
 	language "C++"
 
 	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
@@ -40,15 +42,16 @@ project "LarkinLab"
 		"%{IncludeDir.GLFW}"
 	}
 
-	links 
-	{ 
-		"GLFW",
+	links
+	{
+		"GLFW", --Static library
 		"opengl32.lib"
 	}
 
+	-- Multiplatform filters
 	filter "system:windows"
 		cppdialect "C++17"
-		staticruntime "On"
+		staticruntime "On" -- Linking runtime libraries statically 
 		systemversion "latest"
 
 		defines
@@ -70,10 +73,6 @@ project "LarkinLab"
 		defines "LL_RELEASE"
 		optimize "On"
 
-	filter "configurations:Dist"
-		defines "LL_DIST"
-		optimize "On"
-
 project "Sandbox"
 	location "Sandbox"
 	kind "ConsoleApp"
@@ -90,8 +89,8 @@ project "Sandbox"
 
 	includedirs
 	{
-		"LarkinLab/vendor/spdlog/include",
-		"LarkinLab/src"
+		"LarkinLab/src",
+		"LarkinLab/vendor/spdlog/include"
 	}
 
 	links
@@ -99,15 +98,17 @@ project "Sandbox"
 		"LarkinLab"
 	}
 
+	-- Multiplatform filters
 	filter "system:windows"
 		cppdialect "C++17"
-		staticruntime "On"
+		staticruntime "on" -- Linking runtime libraries statically 
 		systemversion "latest"
 
 		defines
 		{
 			"LL_PLATFORM_WINDOWS"
 		}
+
 
 	filter "configurations:Debug"
 		defines "LL_DEBUG"
@@ -117,6 +118,4 @@ project "Sandbox"
 		defines "LL_RELEASE"
 		optimize "On"
 
-	filter "configurations:Dist"
-		defines "LL_DIST"
-		optimize "On"
+

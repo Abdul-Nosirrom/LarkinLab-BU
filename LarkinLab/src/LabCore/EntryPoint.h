@@ -7,8 +7,7 @@ extern LarkinLab::Application* LarkinLab::CreateApplication();
 int main(int argc, char** argv)
 {
 	LarkinLab::Log::Init();
-	LL_CORE_WARN("Initialized Log!");
-	LL_INFO("Welcome\n");
+	LL_INFO("Initialized Log!");
 
 	auto app = LarkinLab::CreateApplication();
 	app->Run();

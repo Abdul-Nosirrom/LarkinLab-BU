@@ -1,3 +1,5 @@
+#include "llpch.h"
+
 #include "Log.h"
 #include "spdlog/sinks/stdout_color_sinks.h"
 
@@ -14,7 +16,7 @@ namespace LarkinLab
 		s_CoreLogger->set_level(spdlog::level::trace);
 		
 
-		s_ClientLogger = spdlog::stdout_color_mt("LabCore");
+		s_ClientLogger = spdlog::stdout_color_mt("PROG");
 		s_ClientLogger->set_level(spdlog::level::trace);
 	}
 }
