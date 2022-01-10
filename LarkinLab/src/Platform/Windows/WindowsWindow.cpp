@@ -9,6 +9,11 @@ namespace LarkinLab
 {
 	static bool s_GLFWInitialized = false;
 
+	static bool GLFWErrorCallback(int error, const char* description)
+	{
+		LL_CORE_ERROR("GLFW ERROR ({0}): {1}", error, description);
+	}
+
 	Window* Window::Create(const WindowProps& props)
 	{
 		return new WindowsWindow(props);
@@ -36,7 +41,7 @@ namespace LarkinLab
 		{
 			int success = glfwInit();
 			LL_CORE_ASSERT(success, "GLFW Failed to initialize");
-
+			//glfwSetErrorCallback(GLFWErrorCallback);
 			s_GLFWInitialized = true;
 		}
 
@@ -110,7 +115,7 @@ namespace LarkinLab
 				}
 			});
 
-		glfwSetScrollCallback(m_Window, [](GLFWwindow* window, double xOffset, , double yOffset)
+		glfwSetScrollCallback(m_Window, [](GLFWwindow* window, double xOffset, double yOffset)
 			{
 				WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
 				MouseScrolledEvent event((float)xOffset, (float)yOffset);

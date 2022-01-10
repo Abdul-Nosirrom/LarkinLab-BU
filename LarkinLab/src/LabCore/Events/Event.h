@@ -16,20 +16,18 @@ namespace LarkinLab
 		WindowClose, WindowResize, WindowFocus, WindowLostFocus, WindowMoved,
 		AppTick, AppUpdate, AppRender,
 		KeyPressed, KeyReleased,
-		MouseButtonPressed, MouseButtonReleased,
-		MouseMoved, MouseScrolled
+		MouseButtonPressed, MouseButtonReleased, MouseMoved, MouseScrolled
 	};
 
-	enum class EventCategory
+	enum EventCategory
 	{
 		None = 0,
-		EventCategoryApplication =	BIT(0),
-		EventCategoryInput =		BIT(1),
-		EventCategoryKeyboard =		BIT(2),
-		EventCategoryMouse =		BIT(3),
-		EventCategoryMouseButton =	BIT(4)
+		EventCategoryApplication	= BIT(0),
+		EventCategoryInput			= BIT(1),
+		EventCategoryKeyboard		= BIT(2),
+		EventCategoryMouse			= BIT(3),
+		EventCategoryMouseButton	= BIT(4)
 	};
-
 
 #define EVENT_CLASS_TYPE(type) static EventType GetStaticType() { return EventType::##type; }\
 								virtual EventType GetEventType() const override { return GetStaticType(); }\
@@ -50,7 +48,6 @@ namespace LarkinLab
 		{
 			return GetCategoryFlags() & category;
 		}
-
 	protected:
 		bool m_Handled = false;
 	};
@@ -59,9 +56,11 @@ namespace LarkinLab
 	{
 		template<typename T>
 		using EventFn = std::function<bool(T&)>;
-
 	public:
-		EventDispatcher(Event& event) : m_Event(event) {}
+		EventDispatcher(Event& event)
+			: m_Event(event)
+		{
+		}
 
 		template<typename T>
 		bool Dispatch(EventFn<T> func)
@@ -79,6 +78,6 @@ namespace LarkinLab
 
 	inline std::ostream& operator<<(std::ostream& os, const Event& e)
 	{
-		return os << e.ToString();
+		return os <<  e.ToString();
 	}
 }
