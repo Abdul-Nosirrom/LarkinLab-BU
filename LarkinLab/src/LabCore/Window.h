@@ -3,6 +3,7 @@
 #include "llpch.h"
 
 #include "LabCore/Core.h"
+#include "LabCore/Events/Event.h"
 
 namespace LarkinLab
 {
@@ -27,6 +28,7 @@ namespace LarkinLab
 	{
 	public:
 		// Event call back function
+		using EventCallbackFn = std::function<void(Event&)>;
 
 		virtual ~Window() {}
 
@@ -36,6 +38,7 @@ namespace LarkinLab
 		virtual unsigned int GetHeight() const = 0;
 
 		// Window attributes
+		virtual void SetEventCallback(const EventCallbackFn& callback) = 0;
 		virtual void SetVSync(bool enabled) = 0;
 		virtual bool IsVSync() const = 0;
 
