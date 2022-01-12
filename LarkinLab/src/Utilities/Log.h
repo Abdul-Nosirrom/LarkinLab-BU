@@ -2,7 +2,7 @@
 
 #include "llpch.h"
 
-#include "Core.h"
+#include "LabCore/Core.h"
 #include "spdlog/spdlog.h"
 #include "spdlog/fmt/ostr.h"
 

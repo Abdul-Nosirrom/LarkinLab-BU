@@ -2,7 +2,7 @@
 
 // For use by applications
 
-#include "LabCore/Log.h"
+#include "Utilities/Log.h"
 #include "LabCore/Application.h"
 
 // -- Entry Point -- //
