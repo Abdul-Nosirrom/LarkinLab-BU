@@ -1,9 +1,10 @@
 #pragma once
 
 #include "Core.h"
-#include "Events/Event.h"
-#include "Events/ApplicationEvent.h"
 #include "Window.h"
+#include "LabCore/Layers/LayerStack.h"
+#include "LabCore/Events/Event.h"
+#include "LabCore/Events/ApplicationEvent.h"
 
 namespace LarkinLab
 {
@@ -18,9 +19,14 @@ namespace LarkinLab
 
 		void Run();
 		void OnEvent(Event& e);
+
+		void PushLayer(Layer* layer);
+		void PushOverlay(Layer* overlay);
 	private:
 		bool OnWindowClose(WindowCloseEvent& e);
+
 		std::unique_ptr<Window> m_Window;
+		LayerStack m_LayerStack;
 		bool m_Running = true;
 
 	};

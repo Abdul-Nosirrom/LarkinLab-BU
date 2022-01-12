@@ -64,14 +64,12 @@ project "LarkinLab"
 
 	filter "configurations:Debug"
 		defines "LL_DEBUG"
+		buildoptions "/MDd"
 		symbols "On"
 
 	filter "configurations:Release"
 		defines "LL_RELEASE"
-		optimize "On"
-
-	filter "configurations:Dist"
-		defines "LL_DIST"
+		buildoptions "/MD"
 		optimize "On"
 
 project "Sandbox"
@@ -111,12 +109,11 @@ project "Sandbox"
 
 	filter "configurations:Debug"
 		defines "LL_DEBUG"
+		buildoptions "/MDd"
 		symbols "On"
 
 	filter "configurations:Release"
 		defines "LL_RELEASE"
+		buildoptions "/MD"
 		optimize "On"
 
-	filter "configurations:Dist"
-		defines "LL_DIST"
-		optimize "On"
