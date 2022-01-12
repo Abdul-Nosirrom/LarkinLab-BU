@@ -52,7 +52,7 @@ namespace LarkinLab
 		// Once GL Context is created, load GLAD //
 		int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
 		LL_CORE_ASSERT(status, "GLAD Failed to initialize");
-		///////////////////////////////////////////
+		///////////////////////////////////////////b
 		glfwSetWindowUserPointer(m_Window, &m_Data);
 		SetVSync(true);
 

@@ -4,6 +4,6 @@
 [submodule "LarkinLab/vendor/GLFW"]
 	path = LarkinLab/vendor/GLFW
 	url = https://github.com/TheCherno/glfw
-[submodule "LarkinLab/vendor/LarkinLab/vendor/GLFW"]
-	path = LarkinLab/vendor/LarkinLab/vendor/GLFW
-	url = https://github.com/TheCherno/glfw
+[submodule "LarkinLab/vendor/imgui"]
+	path = LarkinLab/vendor/imgui
+	url = https://github.com/ocornut/imgui
