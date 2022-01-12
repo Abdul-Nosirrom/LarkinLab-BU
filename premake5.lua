@@ -50,6 +50,11 @@ project "LarkinLab"
 		"opengl32.lib"
 	}
 
+	defines
+	{
+		"GLFW_INCLUDE_NONE" -- To avoid GLAD and GLFW both including openGL
+	}
+
 	filter "system:windows"
 		cppdialect "C++17"
 		staticruntime "On"
