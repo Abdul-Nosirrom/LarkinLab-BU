@@ -4,7 +4,7 @@
 
 namespace LarkinLab
 {
-	class ImGuiLayer : public Layer
+	class LL_API ImGuiLayer : public Layer
 	{
 	public:
 		ImGuiLayer();
@@ -15,5 +15,7 @@ namespace LarkinLab
 
 		void OnUpdate();
 		void OnEvent(Event& event);
+	protected:
+		float m_Time = 0.0f;
 	};
 }
