@@ -3,6 +3,7 @@
 
 #include "imgui.h"
 #include "backends/imgui_impl_opengl3.h"
+#include "backends/imgui_impl_glfw.h"
 
 #include "LabCore/Application.h"
 
@@ -32,6 +33,7 @@ namespace LarkinLab
 		io.BackendFlags |= ImGuiBackendFlags_HasMouseCursors;
 		io.BackendFlags |= ImGuiBackendFlags_HasSetMousePos;
 
+
 		// Set other IO Keycodes
 		ImGui_ImplOpenGL3_Init("#version 410");
 
@@ -58,6 +60,7 @@ namespace LarkinLab
 
 		static bool show = true;
 		ImGui::ShowDemoWindow(&show);
+		
 
 		ImGui::Render();
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
@@ -122,6 +125,9 @@ namespace LarkinLab
 		io.KeyShift = io.KeysDown[GLFW_KEY_LEFT_SHIFT] || io.KeysDown[GLFW_KEY_RIGHT_SHIFT];
 		io.KeyAlt = io.KeysDown[GLFW_KEY_LEFT_ALT] || io.KeysDown[GLFW_KEY_RIGHT_ALT];
 		io.KeySuper = io.KeysDown[GLFW_KEY_LEFT_SUPER] || io.KeysDown[GLFW_KEY_RIGHT_SUPER];
+
+		
+
 		return false;
 	}
 
@@ -139,6 +145,7 @@ namespace LarkinLab
 		int keycode = e.GetKeyCode();
 		if (keycode > 0 && keycode < 0x10000)
 			io.AddInputCharacter((unsigned short)keycode);
+		
 
 		return false;
 	}

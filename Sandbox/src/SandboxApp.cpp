@@ -25,7 +25,6 @@ class Sandbox : public LarkinLab::Application
 public:
 	Sandbox()
 	{
-		PushLayer(new ExampleLayer());
 		PushOverlay(new LarkinLab::ImGuiLayer());
 	}
 

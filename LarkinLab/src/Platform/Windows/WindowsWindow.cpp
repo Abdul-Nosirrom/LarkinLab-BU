@@ -168,4 +168,5 @@ namespace LarkinLab
 	{
 		return m_Data.VSync;
 	}
+
 }

@@ -24,6 +24,8 @@ namespace LarkinLab
 
 }
 
+#ifdef LL_ENABLE_LOGS
+
 // Core Log Macros
 #define LL_CORE_TRACE(...)	::LarkinLab::Log::GetCoreLogger()->trace(__VA_ARGS__)
 #define LL_CORE_INFO(...)	::LarkinLab::Log::GetCoreLogger()->info(__VA_ARGS__)
@@ -38,3 +40,18 @@ namespace LarkinLab
 #define LL_ERROR(...)		::LarkinLab::Log::GetClientLogger()->error(__VA_ARGS__)
 #define LL_FATAL(...)		::LarkinLab::Log::GetClientLogger()->critical(__VA_ARGS__)
 
+#else
+
+#define LL_CORE_TRACE(...)
+#define LL_CORE_INFO(...)	
+#define LL_CORE_WARN(...)	
+#define LL_CORE_ERROR(...)	
+#define LL_CORE_FATAL(...)	
+
+#define LL_TRACE(...)		
+#define LL_INFO(...)		
+#define LL_WARN(...)		
+#define LL_ERROR(...)		
+#define LL_FATAL(...)
+
+#endif
