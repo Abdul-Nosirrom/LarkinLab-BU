@@ -7,3 +7,6 @@
 [submodule "LarkinLab/vendor/glm"]
 	path = LarkinLab/vendor/glm
 	url = https://github.com/g-truc/glm
+[submodule "LarkinLab/vendor/imgui"]
+	path = LarkinLab/vendor/imgui
+	url = https://github.com/Abdul-Nosirrom/imgui
