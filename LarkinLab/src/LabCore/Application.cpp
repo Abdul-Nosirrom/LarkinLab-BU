@@ -7,6 +7,8 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
+#include "LabCore/Input.h"
+
 namespace LarkinLab
 {
 
@@ -65,6 +67,7 @@ namespace LarkinLab
 				layer->OnUpdate();
 
 			m_Window->OnUpdate();
+
 		}
 	}
 

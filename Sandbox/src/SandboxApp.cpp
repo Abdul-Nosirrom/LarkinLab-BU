@@ -10,12 +10,16 @@ public:
 
 	void OnUpdate() override
 	{
-		LL_INFO("ExampleLayer::Update");
+
 	}
 
 	void OnEvent(LarkinLab::Event& event) override
 	{
-		LL_TRACE("{0}", event);
+		if (event.GetEventType() == LarkinLab::EventType::KeyPressed)
+		{
+			LarkinLab::KeyPressedEvent& e = (LarkinLab::KeyPressedEvent&)event;
+			LL_TRACE("{0}", (char)e.GetKeyCode());
+		}
 	}
 
 };
@@ -25,6 +29,7 @@ class Sandbox : public LarkinLab::Application
 public:
 	Sandbox()
 	{
+		PushLayer(new ExampleLayer());
 		PushOverlay(new LarkinLab::ImGuiLayer());
 	}
 
