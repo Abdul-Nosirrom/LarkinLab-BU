@@ -10,8 +10,6 @@
 namespace LarkinLab
 {
 
-#define BIND_EVENT_FN(x) std::bind(&Application::x, this, std::placeholders::_1)
-
 	Application* Application::s_Instance = nullptr; // Singleton reference
 
 	Application::Application()
@@ -43,7 +41,7 @@ namespace LarkinLab
 	void Application::OnEvent(Event& e)
 	{
 		EventDispatcher dispatcher(e);
-		dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_FN(OnWindowClose));
+		dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_FN(Application::OnWindowClose));
 		//LL_CORE_TRACE("{0}", e);
 
 		// Handle layer events by order (so check if event is handled by uppermost layer first)
