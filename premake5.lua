@@ -76,6 +76,27 @@ project "LarkinLab"
 			("{COPY} %{cfg.buildtarget.relpath} \"../bin/" .. outputdir .. "/Sandbox/\"")
 		}
 
+	filter "system:linux"
+		pic "On"
+		cppdialect "C++17"
+		systemversion "latest"
+
+		links 
+		{ 
+			"Xrandr",
+			"Xi",
+			"GLEW",
+			"GLU",
+			"GL",
+			"X11"
+		}
+
+		defines
+		{
+			"LL_PLATFORM_LINUX",
+			"LL_BUILD_DLL"
+		}
+
 	filter "configurations:Debug"
 		defines "LL_DEBUG"
 		runtime "Debug"
@@ -124,6 +145,15 @@ project "Sandbox"
 		defines
 		{
 			"LL_PLATFORM_WINDOWS"
+		}
+
+	filter "system:linux"
+		cppdialect "C++17"
+		systemversion "latest"
+
+		defines
+		{
+			"LL_PLATFORM_LINUX"
 		}
 
 	filter "configurations:Debug"

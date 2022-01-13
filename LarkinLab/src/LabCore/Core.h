@@ -8,6 +8,14 @@
 	#endif
 
 	#define LL_DEBUG_BREAK() __debugbreak()
+#elif LL_PLATFORM_LINUX
+	#ifdef LL_BUILD_DLL
+		#define LL_API __attribute((visibility("default")))
+	#else 
+		#define LL_API
+	#endif	
+
+	#define LL_DEBUG_BREAK() 
 #endif 
 
 #ifdef LL_DEBUG
