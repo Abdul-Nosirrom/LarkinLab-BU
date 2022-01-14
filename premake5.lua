@@ -24,9 +24,10 @@ include "LarkinLab/vendor/imgui"
 
 project "LarkinLab"
 	location "LarkinLab"
-	kind "SharedLib"
+	kind "StaticLib"
 	language "C++"
-	staticruntime "off"
+	cppdialect "C++17"
+	staticruntime "on"
 
 	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
 	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
@@ -62,11 +63,12 @@ project "LarkinLab"
 
 	defines
 	{
+		"_CRT_SECURE_NO_WARNINGS",
 		"GLFW_INCLUDE_NONE" -- To avoid GLAD and GLFW both including openGL
 	}
 
 	filter "system:windows"
-		cppdialect "C++17"
+		--cppdialect "C++17"
 		systemversion "latest"
 
 		defines
@@ -75,10 +77,10 @@ project "LarkinLab"
 			"LL_BUILD_DLL"
 		}
 
-		postbuildcommands
-		{
-			("{COPY} %{cfg.buildtarget.relpath} \"../bin/" .. outputdir .. "/Sandbox/\"")
-		}
+		--postbuildcommands
+		--{
+		--	("{COPY} %{cfg.buildtarget.relpath} \"../bin/" .. outputdir .. "/Sandbox/\"")
+		--}
 
 	filter "system:linux"
 		pic "On"
@@ -104,23 +106,24 @@ project "LarkinLab"
 	filter "configurations:Debug"
 		defines "LL_DEBUG"
 		runtime "Debug"
-		symbols "On"
+		symbols "on"
 
 	filter "configurations:Release"
 		defines "LL_RELEASE"
 		runtime "Release"
-		optimize "On"
+		optimize "on"
 
 	filter "configurations:Dist"
 		defines "LL_DIST"
 		runtime "Release"
-		optimize "On"
+		optimize "on"
 
 project "Sandbox"
 	location "Sandbox"
 	kind "ConsoleApp"
 	language "C++"
-	staticruntime "off"
+	cppdialect "C++17"
+	staticruntime "on"
 
 	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
 	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
@@ -135,6 +138,8 @@ project "Sandbox"
 	{
 		"LarkinLab/vendor/spdlog/include",
 		"LarkinLab/src",
+		"LarkinLab/vendor",
+		"%{IncludeDir.ImGui}",
 		"%{IncludeDir.glm}"
 	}
 
@@ -144,7 +149,6 @@ project "Sandbox"
 	}
 
 	filter "system:windows"
-		cppdialect "C++17"
 		systemversion "latest"
 
 		defines
@@ -153,7 +157,6 @@ project "Sandbox"
 		}
 
 	filter "system:linux"
-		cppdialect "C++17"
 		systemversion "latest"
 
 		defines
@@ -164,15 +167,15 @@ project "Sandbox"
 	filter "configurations:Debug"
 		defines "LL_DEBUG"
 		runtime "Debug"
-		symbols "On"
+		symbols "on"
 
 	filter "configurations:Release"
 		defines "LL_RELEASE"
 		runtime "Release"
-		optimize "On"
+		optimize "on"
 
 	filter "configurations:Dist"
 		defines "LL_DIST"
 		runtime "Release"
-		optimize "On"
+		optimize "on"
 

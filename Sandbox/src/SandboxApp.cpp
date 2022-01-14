@@ -1,5 +1,7 @@
 #include <LarkinLab.h>
 
+#include "imgui.h"
+
 class ExampleLayer : public LarkinLab::Layer
 {
 public:
@@ -11,6 +13,13 @@ public:
 	void OnUpdate() override
 	{
 
+	}
+
+	virtual void OnImGuiRender() override 
+	{
+		ImGui::Begin("Test");
+		ImGui::Text("Hello world!");
+		ImGui::End();
 	}
 
 	void OnEvent(LarkinLab::Event& event) override
@@ -30,7 +39,6 @@ public:
 	Sandbox()
 	{
 		PushLayer(new ExampleLayer());
-		PushOverlay(new LarkinLab::ImGuiLayer());
 	}
 
 	~Sandbox()

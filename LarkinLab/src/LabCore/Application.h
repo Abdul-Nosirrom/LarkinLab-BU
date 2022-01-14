@@ -3,6 +3,7 @@
 #include "Core.h"
 #include "Window.h"
 #include "LabCore/Layers/LayerStack.h"
+#include "LabCore/Layers/ImGuiLayer.h"
 #include "LabCore/Events/Event.h"
 #include "LabCore/Events/ApplicationEvent.h"
 
@@ -27,6 +28,7 @@ namespace LarkinLab
 		bool OnWindowClose(WindowCloseEvent& e);
 
 		std::unique_ptr<Window> m_Window;
+		ImGuiLayer* m_ImGuiLayer;
 		LayerStack m_LayerStack;
 		bool m_Running = true;
 

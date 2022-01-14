@@ -1,12 +1,15 @@
 #pragma once
 
 #ifdef LL_PLATFORM_WINDOWS
+#if LL_DYNAMIC_LINK
 	#ifdef LL_BUILD_DLL
 		#define LL_API __declspec(dllexport)
 	#else
 		#define LL_API __declspec(dllimport)
 	#endif
-
+#else 
+	#define LL_API
+#endif
 	#define LL_DEBUG_BREAK() __debugbreak()
 #elif LL_PLATFORM_LINUX
 	#ifdef LL_BUILD_DLL

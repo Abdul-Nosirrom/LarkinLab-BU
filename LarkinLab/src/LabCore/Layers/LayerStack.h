@@ -31,7 +31,7 @@ namespace LarkinLab
 		/// between our application layers and overlays - only gets updated with layer operations not
 		/// overlay operations
 		/// </summary>
-		std::vector<Layer*>::iterator m_LayerInsert;
+		unsigned int m_LayerInsertIndex = 0;
 	};
 }
 
