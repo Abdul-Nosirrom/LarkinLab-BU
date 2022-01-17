@@ -27,7 +27,8 @@ public:
 		}
 		if (m_fileDialog.HasSelected())
 		{
-			LL_TRACE(m_fileDialog.GetSelected().string());
+			imagePath = m_fileDialog.GetSelected().string();
+			LL_TRACE(imagePath);
 			m_fileDialog.ClearSelected();
 		}
 		m_fileDialog.Display();

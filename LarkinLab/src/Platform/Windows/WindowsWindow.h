@@ -1,8 +1,10 @@
 #include "llpch.h"
 
 #include "LabCore/Window.h"
+#include "LabCore/Renderer/RenderingContext.h"
 
 #include <GLFW/glfw3.h>
+
 
 namespace LarkinLab
 {
@@ -29,6 +31,7 @@ namespace LarkinLab
 		// Fields
 	private:
 		GLFWwindow* m_Window;
+		RenderingContext* m_Context;
 
 		struct WindowData
 		{
