@@ -12,6 +12,8 @@
 #include <GLFW/glfw3.h>
 #include <glad/glad.h>
 
+#include "LabCore/ImGui/imfilebrowser.h"
+
 namespace LarkinLab
 {
 	ImGuiLayer::ImGuiLayer() : Layer("ImGuiLayer")

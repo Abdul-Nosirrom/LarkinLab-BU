@@ -1,6 +1,7 @@
 #include <LarkinLab.h>
 
 #include "imgui.h"
+#include "LabCore/ImGui/imfilebrowser.h"
 
 class ExampleLayer : public LarkinLab::Layer
 {
@@ -8,6 +9,8 @@ public:
 	ExampleLayer()
 		: Layer("Example")
 	{
+		m_fileDialog.SetTitle("File Explorer");
+		m_fileDialog.SetTypeFilters({".tif"});
 	}
 
 	void OnUpdate() override
@@ -18,7 +21,16 @@ public:
 	virtual void OnImGuiRender() override 
 	{
 		ImGui::Begin("Test");
-		ImGui::Text("Hello world!");
+		if (ImGui::Button("Select Image:"))
+		{
+			m_fileDialog.Open();
+		}
+		if (m_fileDialog.HasSelected())
+		{
+			LL_TRACE(m_fileDialog.GetSelected().string());
+			m_fileDialog.ClearSelected();
+		}
+		m_fileDialog.Display();
 		ImGui::End();
 	}
 
@@ -30,6 +42,11 @@ public:
 			LL_TRACE("{0}", (char)e.GetKeyCode());
 		}
 	}
+
+private:
+	ImGui::FileBrowser m_fileDialog;
+	bool showExplorer;
+	std::string imagePath;
 
 };
 
