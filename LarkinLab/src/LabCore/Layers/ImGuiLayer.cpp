@@ -12,7 +12,6 @@
 #include <GLFW/glfw3.h>
 #include <glad/glad.h>
 
-#include "LabCore/ImGui/imfilebrowser.h"
 
 namespace LarkinLab
 {
@@ -42,7 +41,7 @@ namespace LarkinLab
 		ImGuiStyle& style = ImGui::GetStyle();
 		if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
 		{
-			style.WindowRounding = 0.0f;
+			style.WindowRounding = 0.5f;
 			style.Colors[ImGuiCol_WindowBg].w = 1.0f;
 		}
 
@@ -55,6 +54,8 @@ namespace LarkinLab
 #elif LL_PLATFORM_LINUX
 		ImGui_ImplOpenGL3_Init("#version 450");
 #endif
+
+
 	}
 
 	void ImGuiLayer::OnDetach()
@@ -90,11 +91,13 @@ namespace LarkinLab
 		}
 	}
 
+
 	// Where to write your code for ImGui UI Rendering and all that jazz for custom setups
 	void ImGuiLayer::OnImGuiRender()
 	{
-		static bool show = true;
-		ImGui::ShowDemoWindow(&show);
+
 	}
+
+
 
 }

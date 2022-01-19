@@ -13,6 +13,9 @@
 
 #include "LabCore/Layers/ImGuiLayer.h"
 
+// -- Rendering Stuff -- //
+#include "Platform/OpenGL/OpenGLTexture.h"
+
 // -- Entry Point -- //
-#include "LabCore/EntryPoint.h"
+//#include "LabCore/EntryPoint.h"
 //---------------------

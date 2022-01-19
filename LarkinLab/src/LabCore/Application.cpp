@@ -71,10 +71,16 @@ namespace LarkinLab
 			m_ImGuiLayer->Begin();
 			for (Layer* layer : m_LayerStack)
 				layer->OnImGuiRender();
+			
 			m_ImGuiLayer->End();
 
 			m_Window->OnUpdate();
 		}
+	}
+
+	void Application::Close()
+	{
+		m_Running = false;
 	}
 
 

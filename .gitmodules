@@ -10,3 +10,6 @@
 [submodule "LarkinLab/vendor/imgui"]
 	path = LarkinLab/vendor/imgui
 	url = https://github.com/Abdul-Nosirrom/imgui
+[submodule "LarkinLab/vendor/stdb"]
+	path = LarkinLab/vendor/stdb
+	url = https://github.com/nothings/stb

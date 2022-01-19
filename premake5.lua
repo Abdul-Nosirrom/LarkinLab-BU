@@ -17,6 +17,10 @@ IncludeDir["GLFW"] = "LarkinLab/vendor/GLFW/include"
 IncludeDir["Glad"] = "LarkinLab/vendor/Glad/include"
 IncludeDir["ImGui"] = "LarkinLab/vendor/imgui"
 IncludeDir["glm"] = "LarkinLab/vendor/glm"
+--IncludeDir["OpenCV"] = "../opencv/build/install/include"
+
+--LibraryDir = {}
+--LibraryDir["OpenCV"] = "../opencv/build/install/x64/vc16/lib"
 
 include "LarkinLab/vendor/GLFW"
 include "LarkinLab/vendor/Glad"
@@ -47,10 +51,17 @@ project "LarkinLab"
 	{
 		"%{prj.name}/src",
 		"%{prj.name}/vendor/spdlog/include",
+		"%{prj.name}/vendor/stdb",
 		"%{IncludeDir.GLFW}",
 		"%{IncludeDir.Glad}",
 		"%{IncludeDir.ImGui}",
 		"%{IncludeDir.glm}"
+		--"%{IncludeDir.OpenCV}"
+	}
+
+	libdirs
+	{
+		--"{%LibraryDir.OpenCV}"
 	}
 
 	links 
@@ -99,8 +110,7 @@ project "LarkinLab"
 
 		defines
 		{
-			"LL_PLATFORM_LINUX",
-			"LL_BUILD_DLL"
+			"LL_PLATFORM_LINUX"
 		}
 
 	filter "configurations:Debug"
@@ -141,6 +151,12 @@ project "Sandbox"
 		"LarkinLab/vendor",
 		"%{IncludeDir.ImGui}",
 		"%{IncludeDir.glm}"
+		--"%{IncludeDir.OpenCV}"
+	}
+
+	libdirs
+	{
+		--"{%LibraryDir.OpenCV}"
 	}
 
 	links
@@ -162,6 +178,17 @@ project "Sandbox"
 		defines
 		{
 			"LL_PLATFORM_LINUX"
+		}
+
+		links
+		{
+			"GLFW",
+			"Glad",
+			"ImGui",
+			"Xrandr",
+			"Xi",
+			"dl",
+			"pthread"
 		}
 
 	filter "configurations:Debug"

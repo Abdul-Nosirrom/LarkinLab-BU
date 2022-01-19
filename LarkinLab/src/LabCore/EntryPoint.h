@@ -1,4 +1,6 @@
 #pragma once
+#include "LabCore/Core.h"
+#include "LabCore/Application.h"
 
 #ifdef LL_PLATFORM_WINDOWS
 

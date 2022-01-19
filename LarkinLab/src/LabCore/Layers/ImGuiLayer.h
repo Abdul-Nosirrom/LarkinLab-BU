@@ -7,6 +7,11 @@
 #include "LabCore/Events/KeyEvent.h"
 #include "LabCore/Events/ApplicationEvent.h"
 
+#include "Platform/OpenGL/OpenGLTexture.h"
+
+#include "imgui.h"
+#include "LabCore/ImGui/imfilebrowser.h"
+
 namespace LarkinLab
 {
 	class LL_API ImGuiLayer : public Layer
