@@ -7,6 +7,9 @@
 
 #include "Platform/OpenGL/OpenGLContext.h"
 
+#include "Utilities/Log.h"
+
+
 namespace LarkinLab
 {
 	static bool s_GLFWInitialized = false;

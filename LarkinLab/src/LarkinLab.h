@@ -3,9 +3,7 @@
 // For use by applications
 
 // Some library conflicts if this is included before stb_image on linux
-#ifdef LL_PLATFORM_WINDOWS
 #include "Utilities/Log.h"
-#endif
 
 #include "LabCore/Application.h"
 #include "LabCore/Layers/Layer.h"

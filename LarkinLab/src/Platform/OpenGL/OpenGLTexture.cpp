@@ -6,6 +6,10 @@
 
 #include <glad/glad.h>
 
+#ifdef LL_PLATFORM_WINDOWS
+#include "Utilities/Log.h"
+#endif 
+
 namespace LarkinLab
 {
 

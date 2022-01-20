@@ -12,7 +12,6 @@
 #include <vector>
 #include <unordered_map>
 #include <unordered_set>
-#include "Utilities/Log.h"
 
 #ifdef LL_PLATFORM_WINDOWS
 	#include <Windows.h>

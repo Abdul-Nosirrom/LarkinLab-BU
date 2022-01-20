@@ -9,6 +9,9 @@
 
 #include "LabCore/Input.h"
 
+#include "Utilities/Log.h"
+
+
 namespace LarkinLab
 {
 
