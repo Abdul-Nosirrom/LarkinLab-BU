@@ -16,7 +16,6 @@ namespace LarkinLab
 	OpenGLTexture::OpenGLTexture(const std::string& path) : m_Path(path)
 	{
 		int width, height, channels;
-		stbi_set_flip_vertically_on_load(1);
 		stbi_uc* data = stbi_load(path.c_str(), &width, &height, &channels, 0);
 
 		if (data)
@@ -45,14 +44,17 @@ namespace LarkinLab
 #ifdef LL_PLATFORM_WINDOWS
 			LL_CORE_ASSERT(internalFormat & dataFormat, "Format not supported!");
 #endif
+			
 			glCreateTextures(GL_TEXTURE_2D, 1, &m_TextureID);
 			glTextureStorage2D(m_TextureID, 1, internalFormat, m_Width, m_Height);
 
 			glTextureParameteri(m_TextureID, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 			glTextureParameteri(m_TextureID, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-			glTextureParameteri(m_TextureID, GL_TEXTURE_WRAP_S, GL_REPEAT);
-			glTextureParameteri(m_TextureID, GL_TEXTURE_WRAP_T, GL_REPEAT);
+			glTextureParameteri(m_TextureID, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+			glTextureParameteri(m_TextureID, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+
+			glPixelStorei(GL_UNPACK_ALIGNMENT, 1); // THIS FIXED THE STRETCHING ISSUE
 
 			glTextureSubImage2D(m_TextureID, 0, 0, 0, m_Width, m_Height, dataFormat, GL_UNSIGNED_BYTE, data);
 
