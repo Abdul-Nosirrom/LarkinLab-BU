@@ -18,10 +18,11 @@ IncludeDir["Glad"] = "LarkinLab/vendor/Glad/include"
 IncludeDir["ImGui"] = "LarkinLab/vendor/imgui"
 IncludeDir["glm"] = "LarkinLab/vendor/glm"
 --IncludeDir["FileDialog"] = "LarkinLab/vendor/tinyfiledialogs"
---IncludeDir["OpenCV"] = "../opencv/build/install/include"
+IncludeDir["OpenCV"] = "Sandbox/vendor/opencv/include"
 
---LibraryDir = {}
---LibraryDir["OpenCV"] = "../opencv/build/install/x64/vc16/lib"
+-- Library directories relative to root folder (solution directory)
+LibraryDir = {}
+LibraryDir["OpenCV"] = "Sandbox/vendor/opencv/x64/vc16/lib"
 
 include "LarkinLab/vendor/GLFW"
 include "LarkinLab/vendor/Glad"
@@ -58,7 +59,7 @@ project "LarkinLab"
 		"%{IncludeDir.GLFW}",
 		"%{IncludeDir.Glad}",
 		"%{IncludeDir.ImGui}",
-		"%{IncludeDir.glm}",
+		"%{IncludeDir.glm}"
 		--"%{IncludeDir.FileDialog}"
 		--"%{IncludeDir.OpenCV}"
 	}
@@ -154,19 +155,19 @@ project "Sandbox"
 		"LarkinLab/src",
 		"LarkinLab/vendor",
 		"%{IncludeDir.ImGui}",
-		"%{IncludeDir.glm}"
+		"%{IncludeDir.glm}",
 		--"%{IncludeDir.FileDialog}"
-		--"%{IncludeDir.OpenCV}"
+		"%{IncludeDir.OpenCV}"
 	}
 
 	libdirs
 	{
-		--"{%LibraryDir.OpenCV}"
+		"%{LibraryDir.OpenCV}"
 	}
 
 	links
 	{
-		"LarkinLab"
+		"LarkinLab", "opencv_imgcodecs455d"
 	}
 
 	filter "system:windows"
