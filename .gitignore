@@ -2,10 +2,13 @@
 .vs/
 bin/
 bin-int/
+Images/
+Sandbox/vendor/opencv
 
 # VS Files
 *.sl
 *.vcxproj
 *.vcxproj.filters
+
 
 
