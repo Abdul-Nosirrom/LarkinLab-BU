@@ -17,8 +17,10 @@ namespace LarkinLab
 		std::string m_Path;
 		bool m_IsLoaded;
 		uint32_t m_TextureID;
-		uint32_t m_Width, m_Height;
-		GLenum m_InternalFormat, m_DataFormat;
+		uint32_t m_Width;
+		uint32_t m_Height;
+		uint32_t m_InternalFormat;
+		uint32_t m_DataFormat;
 	};
 }
 

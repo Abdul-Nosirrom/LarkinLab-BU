@@ -46,7 +46,7 @@ Thanks for contributions, bug corrections & thorough testing to:
 - Don Heyse http://ldglite.sf.net for bug corrections & thorough testing!
 - Paul Rouget
 */
-
+#include "llpch.h"
 
 #ifndef __sun
 #ifndef _POSIX_C_SOURCE

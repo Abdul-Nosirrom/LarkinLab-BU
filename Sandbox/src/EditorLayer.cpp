@@ -1,6 +1,7 @@
 #include "EditorLayer.h"
 
 #include <imgui/imgui.h>
+#include "LabCore/ImGui/imfilebrowser.h"
 
 using namespace LarkinLab;
 
@@ -67,6 +68,7 @@ void EditorLayer::OnImGuiRender()
 			// Disabling fullscreen would allow the window to be moved to the front of other windows, 
 			// which we can't undo at the moment without finer window depth/z control.
 			//ImGui::MenuItem("Fullscreen", NULL, &opt_fullscreen_persistant);1
+			if (ImGui::MenuItem("Open")) m_fileDialog.Open();
 
 			if (ImGui::MenuItem("Exit")) Application::Get().Close();
 
@@ -75,6 +77,9 @@ void EditorLayer::OnImGuiRender()
 
 		ImGui::EndMenuBar();
 	}
+
+	// Keep file explorer open
+	m_fileDialog.Display();
 
 	ImGui::Begin("Editor Example");
 	// Make editor calls here to be included in the dockspace under Begin/End that's contained in dockspace
@@ -121,4 +126,10 @@ bool EditorLayer::OnKeyPressed(KeyPressedEvent& e)
 	}
 
 	return true;
+}
+
+// -------- Editor GUIs ------- //
+void EditorLayer::FileBrowser()
+{
+
 }

@@ -17,7 +17,7 @@ IncludeDir["GLFW"] = "LarkinLab/vendor/GLFW/include"
 IncludeDir["Glad"] = "LarkinLab/vendor/Glad/include"
 IncludeDir["ImGui"] = "LarkinLab/vendor/imgui"
 IncludeDir["glm"] = "LarkinLab/vendor/glm"
-IncludeDir["FileDialog"] = "LarkinLab/vendor/tinyfiledialogs"
+--IncludeDir["FileDialog"] = "LarkinLab/vendor/tinyfiledialogs"
 --IncludeDir["OpenCV"] = "../opencv/build/install/include"
 
 --LibraryDir = {}
@@ -45,9 +45,9 @@ project "LarkinLab"
 		"%{prj.name}/src/**.h",
 		"%{prj.name}/src/**.cpp",
 		"%{prj.name}/vendor/glm/glm/**.hpp",
-		"%{prj.name}/vendor/glm/glm/**.inl",
-		"%{prj.name}/vendor/tinyfiledialogs/**.c",
-		"%{prj.name}/vendor/tinyfiledialogs/**.h"
+		"%{prj.name}/vendor/glm/glm/**.inl"
+		--"%{prj.name}/vendor/tinyfiledialogs/**.c",
+		--"%{prj.name}/vendor/tinyfiledialogs/**.h"
 	}
 
 	includedirs
@@ -59,7 +59,7 @@ project "LarkinLab"
 		"%{IncludeDir.Glad}",
 		"%{IncludeDir.ImGui}",
 		"%{IncludeDir.glm}",
-		"%{IncludeDir.FileDialog}"
+		--"%{IncludeDir.FileDialog}"
 		--"%{IncludeDir.OpenCV}"
 	}
 
@@ -154,8 +154,8 @@ project "Sandbox"
 		"LarkinLab/src",
 		"LarkinLab/vendor",
 		"%{IncludeDir.ImGui}",
-		"%{IncludeDir.glm}",
-		"%{IncludeDir.FileDialog}"
+		"%{IncludeDir.glm}"
+		--"%{IncludeDir.FileDialog}"
 		--"%{IncludeDir.OpenCV}"
 	}
 
