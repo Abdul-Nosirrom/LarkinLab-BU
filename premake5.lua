@@ -17,12 +17,16 @@ IncludeDir["GLFW"] = "LarkinLab/vendor/GLFW/include"
 IncludeDir["Glad"] = "LarkinLab/vendor/Glad/include"
 IncludeDir["ImGui"] = "LarkinLab/vendor/imgui"
 IncludeDir["glm"] = "LarkinLab/vendor/glm"
---IncludeDir["FileDialog"] = "LarkinLab/vendor/tinyfiledialogs"
-IncludeDir["OpenCV"] = "Sandbox/vendor/opencv/include"
+
 
 -- Library directories relative to root folder (solution directory)
 LibraryDir = {}
-LibraryDir["OpenCV"] = "Sandbox/vendor/opencv/x64/vc16/lib"
+--filter "system:windows"
+	LibraryDir["OpenCV"] = "Sandbox/vendor/opencv/x64/vc16/lib"
+	IncludeDir["OpenCV"] = "Sandbox/vendor/opencv/include"
+--filter "system:linux"
+--	LibraryDir["OpenCV"] = "/usr/local/lib"
+--	IncludeDir["OpenCV"] = "/usr/local/include/opencv4"
 
 include "LarkinLab/vendor/GLFW"
 include "LarkinLab/vendor/Glad"
@@ -47,8 +51,6 @@ project "LarkinLab"
 		"%{prj.name}/src/**.cpp",
 		"%{prj.name}/vendor/glm/glm/**.hpp",
 		"%{prj.name}/vendor/glm/glm/**.inl"
-		--"%{prj.name}/vendor/tinyfiledialogs/**.c",
-		--"%{prj.name}/vendor/tinyfiledialogs/**.h"
 	}
 
 	includedirs
@@ -156,7 +158,6 @@ project "Sandbox"
 		"LarkinLab/vendor",
 		"%{IncludeDir.ImGui}",
 		"%{IncludeDir.glm}",
-		--"%{IncludeDir.FileDialog}"
 		"%{IncludeDir.OpenCV}"
 	}
 
@@ -167,7 +168,7 @@ project "Sandbox"
 
 	links
 	{
-		"LarkinLab", "opencv_imgcodecs455d"
+		"LarkinLab"
 	}
 
 	filter "system:windows"
@@ -177,6 +178,13 @@ project "Sandbox"
 		{
 			"LL_PLATFORM_WINDOWS"
 		}
+
+		links 
+		{
+			"opencv_imgcodecs455d",
+			"opencv_core455d"
+		}
+
 
 	filter "system:linux"
 		systemversion "latest"
@@ -194,7 +202,9 @@ project "Sandbox"
 			"Xrandr",
 			"Xi",
 			"dl",
-			"pthread"
+			"pthread",
+			"opencv_core",
+			"opencv_imgcodecs"
 		}
 
 	filter "configurations:Debug"

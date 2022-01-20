@@ -1,6 +1,9 @@
 #include "llpch.h"
 #include "OpenGLTexture.h"
+
+#define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
+
 #include <glad/glad.h>
 
 namespace LarkinLab
@@ -34,8 +37,10 @@ namespace LarkinLab
 			m_InternalFormat = internalFormat;
 			m_DataFormat = dataFormat;
 
+			// Guarding against this on linux due to stb_image, including Log.h after stb could work
+#ifdef LL_PLATFORM_WINDOWS
 			LL_CORE_ASSERT(internalFormat & dataFormat, "Format not supported!");
-
+#endif
 			glCreateTextures(GL_TEXTURE_2D, 1, &m_TextureID);
 			glTextureStorage2D(m_TextureID, 1, internalFormat, m_Width, m_Height);
 

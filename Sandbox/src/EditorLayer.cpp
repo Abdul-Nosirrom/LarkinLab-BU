@@ -83,7 +83,7 @@ void EditorLayer::OnImGuiRender()
 
 	if (m_fileDialog.HasSelected())
 	{
-		std::string& path = m_fileDialog.GetSelected().string();
+		std::string path = m_fileDialog.GetSelected().string();
 		if (m_Image != NULL) delete(m_Image);
 		m_Image = new OpenCVImage(path);
 		m_fileDialog.ClearSelected();

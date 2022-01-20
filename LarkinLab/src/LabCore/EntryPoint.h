@@ -2,7 +2,7 @@
 #include "LabCore/Core.h"
 #include "LabCore/Application.h"
 
-#ifdef LL_PLATFORM_WINDOWS
+#ifdef LL_PLATFORM_WINDOWS || LL_PLATFORM_LINUX
 
 extern LarkinLab::Application* LarkinLab::CreateApplication();
 
