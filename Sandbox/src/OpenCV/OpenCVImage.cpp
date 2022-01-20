@@ -5,5 +5,10 @@ using namespace LarkinLab;
 OpenCVImage::OpenCVImage(std::string& path)
 {
 	m_Texture = new OpenGLTexture(path);
-	cv::Mat m_Image = cv::imread(path);
+	m_Image = cv::imread(path);
+}
+
+OpenCVImage::~OpenCVImage()
+{
+	delete(m_Texture);
 }

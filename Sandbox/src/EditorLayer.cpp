@@ -5,7 +5,7 @@
 
 using namespace LarkinLab;
 
-EditorLayer::EditorLayer() : Layer("EditoryLayer") {}
+EditorLayer::EditorLayer() : Layer("EditoryLayer") { m_Image = NULL; }
 
 void EditorLayer::OnAttach() {}
 void EditorLayer::OnDetach() {}
@@ -80,6 +80,23 @@ void EditorLayer::OnImGuiRender()
 
 	// Keep file explorer open
 	m_fileDialog.Display();
+
+	if (m_fileDialog.HasSelected())
+	{
+		std::string& path = m_fileDialog.GetSelected().string();
+		if (m_Image != NULL) delete(m_Image);
+		m_Image = new OpenCVImage(path);
+		m_fileDialog.ClearSelected();
+	}
+
+	if (m_Image != NULL)
+	{
+		ImGui::Begin("Image Render");
+		ImVec2 wsize = ImGui::GetWindowSize();
+		// Texture loading
+		ImGui::Image((void*)(intptr_t)m_Image->GetTexture()->GetTextureID(), ImVec2(m_Image->GetTexture()->GetWidth(), m_Image->GetTexture()->GetHeight()));
+		ImGui::End();
+	}
 
 	ImGui::Begin("Editor Example");
 	// Make editor calls here to be included in the dockspace under Begin/End that's contained in dockspace

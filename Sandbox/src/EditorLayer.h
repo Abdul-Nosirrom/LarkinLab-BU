@@ -2,6 +2,8 @@
 
 #include "LarkinLab.h"
 
+#include "OpenCV/OpenCVImage.h"
+
 class EditorLayer : public LarkinLab::Layer
 {
 public:
@@ -18,7 +20,7 @@ private:
 	void FileBrowser();
 
 	ImGui::FileBrowser m_fileDialog;
-	LarkinLab::OpenGLTexture* m_Tex;
+	OpenCVImage* m_Image;
 	bool showExplorer;
 	std::string imagePath;
 };

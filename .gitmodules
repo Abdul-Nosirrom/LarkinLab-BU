@@ -3,7 +3,7 @@
 	url = https://github.com/gabime/spdlog
 [submodule "LarkinLab/vendor/GLFW"]
 	path = LarkinLab/vendor/GLFW
-	url = https://github.com/TheCherno/glfw
+	url = https://github.com/Abdul-Nosirrom/glfw
 [submodule "LarkinLab/vendor/glm"]
 	path = LarkinLab/vendor/glm
 	url = https://github.com/g-truc/glm
