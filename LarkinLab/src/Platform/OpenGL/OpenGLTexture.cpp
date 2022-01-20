@@ -5,32 +5,54 @@
 
 namespace LarkinLab
 {
-	OpenGLTexture::OpenGLTexture()
+
+	OpenGLTexture::OpenGLTexture(const std::string& path) : m_Path(path)
 	{
+		int width, height, channels;
+		stbi_set_flip_vertically_on_load(1);
+		stbi_uc* data = stbi_load(path.c_str(), &width, &height, &channels, 0);
+
+		if (data)
+		{
+			m_IsLoaded = true;
+
+			m_Width = width;
+			m_Height = height;
+
+			GLenum internalFormat = 0, dataFormat = 0;
+			if (channels == 4)
+			{
+				internalFormat = GL_RGBA8;
+				dataFormat = GL_RGBA;
+			}
+			else if (channels == 3)
+			{
+				internalFormat = GL_RGB8;
+				dataFormat = GL_RGB;
+			}
+
+			m_InternalFormat = internalFormat;
+			m_DataFormat = dataFormat;
+
+			LL_CORE_ASSERT(internalFormat & dataFormat, "Format not supported!");
+
+			glCreateTextures(GL_TEXTURE_2D, 1, &m_TextureID);
+			glTextureStorage2D(m_TextureID, 1, internalFormat, m_Width, m_Height);
+
+			glTextureParameteri(m_TextureID, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+			glTextureParameteri(m_TextureID, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+			glTextureParameteri(m_TextureID, GL_TEXTURE_WRAP_S, GL_REPEAT);
+			glTextureParameteri(m_TextureID, GL_TEXTURE_WRAP_T, GL_REPEAT);
+
+			glTextureSubImage2D(m_TextureID, 0, 0, 0, m_Width, m_Height, dataFormat, GL_UNSIGNED_BYTE, data);
+
+			stbi_image_free(data);
+		}
 	}
 
-	bool OpenGLTexture::LoadTextureFromFile(const char* filename)
+	OpenGLTexture::~OpenGLTexture()
 	{
-		unsigned char* image_data = stbi_load(filename, &m_texWidth, &m_texHeight, NULL, 4);
-		if (image_data == NULL) return false;
-
-		glGenTextures(1, &m_textureID);
-		glBindTexture(GL_TEXTURE_2D, m_textureID);
-
-
-		// Setup filtering parameters for display
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE); // This is required on WebGL for non power-of-two textures
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE); // Same
-
-#if defined(GL_UNPACK_ROW_LENGTH) && !defined(__EMSCRIPTEN__)
-		glPixelStorei(GL_UNPACK_ROW_LENGTH, 0);
-#endif
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, m_texWidth, m_texHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, image_data);
-		stbi_image_free(image_data);
-		
-		return true;
+		glDeleteTextures(1, &m_TextureID);
 	}
-
 }

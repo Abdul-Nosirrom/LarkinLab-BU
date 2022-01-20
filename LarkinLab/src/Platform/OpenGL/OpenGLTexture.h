@@ -1,21 +1,24 @@
 #pragma once
 #define STB_IMAGE_IMPLEMENTATION
+
 namespace LarkinLab
 {
 	class OpenGLTexture
 	{
 	public:
-		OpenGLTexture();
+		OpenGLTexture(const std::string& path);
+		~OpenGLTexture();
 		
-		bool LoadTextureFromFile(const char* filename);
-		uint32_t GetTextureID() { return m_textureID; }
-		int GetHeight() { return m_texHeight; }
-		int GetWidth() { return m_texWidth; }
-		void PrintInfo() { LL_CORE_INFO("Found"); }
+		uint32_t GetWidth() const { return m_Width; }
+		uint32_t GetHeight() const { return m_Height; }
+		uint32_t GetTextureID() const { return m_TextureID; }
 
 	private:
-		uint32_t m_textureID;
-		int m_texWidth = 0, m_texHeight = 0;
+		std::string m_Path;
+		bool m_IsLoaded;
+		uint32_t m_TextureID;
+		uint32_t m_Width, m_Height;
+		GLenum m_InternalFormat, m_DataFormat;
 	};
 }
 
