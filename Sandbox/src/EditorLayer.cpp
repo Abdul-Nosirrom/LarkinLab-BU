@@ -1,13 +1,34 @@
 #include "EditorLayer.h"
 
 #include <imgui/imgui.h>
-#include "LabCore/ImGui/imfilebrowser.h"
+#include "LabCore/ImGui/ImFileDialog.h"
+
+// --- Other Editors --- //
+#include "Components/ImageEditor.h"
 
 using namespace LarkinLab;
 
-EditorLayer::EditorLayer() : Layer("EditoryLayer") { m_Image = NULL; }
+EditorLayer::EditorLayer() : Layer("EditoryLayer") 
+{ 
+}
 
-void EditorLayer::OnAttach() {}
+void EditorLayer::OnAttach()
+{
+	showExplorer = false;
+	m_FileDialog = &ifd::FileDialog::Instance();
+	// Initialize ImFileDialog Texture functions
+	m_FileDialog->CreateTexture = [](uint8_t* data, int w, int h, char fmt) -> void*
+	{
+		return OpenGLTexture::FileDialogCreateHelper(data, w, h, fmt);
+	};
+
+	m_FileDialog->DeleteTexture = [](void* ID)
+	{
+		OpenGLTexture::FileDialogDestroyHelper(ID);
+	};
+}
+
+
 void EditorLayer::OnDetach() {}
 
 void EditorLayer::OnImGuiRender()
@@ -68,9 +89,17 @@ void EditorLayer::OnImGuiRender()
 			// Disabling fullscreen would allow the window to be moved to the front of other windows, 
 			// which we can't undo at the moment without finer window depth/z control.
 			//ImGui::MenuItem("Fullscreen", NULL, &opt_fullscreen_persistant);1
-			if (ImGui::MenuItem("Open")) m_fileDialog.Open();
+			if (ImGui::MenuItem("Open")) showExplorer = true;
 
 			if (ImGui::MenuItem("Exit")) Application::Get().Close();
+
+			ImGui::EndMenu();
+		}
+
+		if (ImGui::BeginMenu("Edit"))
+		{
+			ImGui::Selectable("Show Original Image", &m_ImageEditor.showOriginal);
+			ImGui::Selectable("Show Test Image", &m_ImageEditor.showEdit);
 
 			ImGui::EndMenu();
 		}
@@ -79,29 +108,10 @@ void EditorLayer::OnImGuiRender()
 	}
 
 	// Keep file explorer open
-	m_fileDialog.Display();
+	if (showExplorer) FileBrowser();
 
-	if (m_fileDialog.HasSelected())
-	{
-		std::string path = m_fileDialog.GetSelected().string();
-		if (m_Image != NULL) delete(m_Image);
-		m_Image = new OpenCVImage(path);
-		m_fileDialog.ClearSelected();
-	}
 
-	if (m_Image != NULL)
-	{
-		ImGui::Begin("Image Render");
-		ImVec2 wsize = ImGui::GetWindowSize();
-		// Texture loading
-		ImGui::Image((void*)(intptr_t)m_Image->GetTexture()->GetTextureID(), ImVec2(m_Image->GetTexture()->GetWidth(), m_Image->GetTexture()->GetHeight()));
-		ImGui::End();
-	}
-
-	ImGui::Begin("Editor Example");
-	// Make editor calls here to be included in the dockspace under Begin/End that's contained in dockspace
-	ImGui::End();
-
+	m_ImageEditor.OnImGuiRender();
 
 
 	ImGui::End();
@@ -148,5 +158,15 @@ bool EditorLayer::OnKeyPressed(KeyPressedEvent& e)
 // -------- Editor GUIs ------- //
 void EditorLayer::FileBrowser()
 {
-
+	m_FileDialog->Open("TextureOpenDialog", "Open a texture", "Image file (*.png;*.jpg;*.jpeg;*.bmp;*.tga){.png,.jpg,.jpeg,.bmp,.tga},.*");
+	if (m_FileDialog->IsDone("TextureOpenDialog")) 
+	{
+		if (m_FileDialog->HasResult()) 
+		{
+			std::string path = m_FileDialog->GetResult().u8string();
+			m_ImageEditor.LoadImageToEditor(path);
+		}
+		m_FileDialog->Close();
+		showExplorer = false;
+	}
 }

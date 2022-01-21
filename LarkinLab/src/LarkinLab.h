@@ -18,6 +18,9 @@
 // -- Rendering Stuff -- //
 #include "Platform/OpenGL/OpenGLTexture.h"
 
+// -- ImGui Functionality -- //
+#include "LabCore/ImGui/ImFileDialog.h"
+
 // -- Entry Point -- //
 //#include "LabCore/EntryPoint.h"
 //---------------------

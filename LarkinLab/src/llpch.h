@@ -1,6 +1,8 @@
 #pragma once
 
+#define NOMINMAX // Defined as errors caused with windows.h if using std::max
 #define _CRT_SECURE_NO_WARNINGS
+
 #include <iostream>
 #include <memory>
 #include <utility>

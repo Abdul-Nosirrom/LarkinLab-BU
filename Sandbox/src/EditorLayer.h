@@ -3,6 +3,8 @@
 #include "LarkinLab.h"
 
 #include "OpenCV/OpenCVImage.h"
+#include "Components/ImageEditor.h"
+
 
 class EditorLayer : public LarkinLab::Layer
 {
@@ -19,9 +21,10 @@ private:
 	bool OnKeyPressed(LarkinLab::KeyPressedEvent& e);
 	void FileBrowser();
 
-	ImGui::FileBrowser m_fileDialog;
-	OpenCVImage* m_Image;
+	ifd::FileDialog* m_FileDialog;
 	bool showExplorer;
-	std::string imagePath;
+
+	// Editors
+	ImageEditor m_ImageEditor;
 };
 

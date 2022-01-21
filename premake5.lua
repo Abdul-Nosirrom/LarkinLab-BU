@@ -153,6 +153,7 @@ project "Sandbox"
 
 	includedirs
 	{
+		"%{prj.name}/src",
 		"LarkinLab/vendor/spdlog/include",
 		"LarkinLab/src",
 		"LarkinLab/vendor",

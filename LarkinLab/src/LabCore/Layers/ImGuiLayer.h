@@ -10,7 +10,6 @@
 #include "Platform/OpenGL/OpenGLTexture.h"
 
 #include "imgui.h"
-#include "LabCore/ImGui/imfilebrowser.h"
 
 namespace LarkinLab
 {
