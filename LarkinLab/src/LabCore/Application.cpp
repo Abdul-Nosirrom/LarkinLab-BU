@@ -50,6 +50,7 @@ namespace LarkinLab
 	{
 		EventDispatcher dispatcher(e);
 		dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_FN(Application::OnWindowClose));
+		dispatcher.Dispatch<WindowResizeEvent>(BIND_EVENT_FN(Application::OnWindowResize));
 
 		// Handle layer events by order (so check if event is handled by uppermost layer first)
 		for (auto it = m_LayerStack.end(); it != m_LayerStack.begin();)
@@ -91,5 +92,19 @@ namespace LarkinLab
 	{
 		m_Running = false;
 		return true;
+	}
+
+	// Added window resize event to scale images properly on resize
+	bool Application::OnWindowResize(WindowResizeEvent& e)
+	{
+		if (e.GetWidth() == 0 || e.GetHeight() == 0)
+		{
+			return false; // Means its minimized, dont do anything
+		}
+
+		glViewport(0, 0, e.GetWidth(), e.GetHeight());
+		LL_CORE_INFO("Window Resize");
+
+		return false; // We return false because we want all to deal with this
 	}
 }
