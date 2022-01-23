@@ -20,9 +20,12 @@ public:
 private:
 	bool OnKeyPressed(LarkinLab::KeyPressedEvent& e);
 	void FileBrowser();
+	void SaveBrowser();
+	void SaveFile();
 
 	ifd::FileDialog* m_FileDialog;
-	bool showExplorer;
+	bool showExplorer = false;
+	bool showSave = false;
 
 	// Editors
 	ImageEditor m_ImageEditor;

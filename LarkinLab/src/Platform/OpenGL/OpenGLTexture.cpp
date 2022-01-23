@@ -14,43 +14,20 @@
 
 namespace LarkinLab
 {
+	OpenGLTexture::OpenGLTexture(unsigned char* data, int width, int height)
+	{
+		LoadTexture(data, width, height);
+	}
 
 	OpenGLTexture::OpenGLTexture(const std::string& path) : m_Path(path)
 	{
 		int width, height, channels;
 		unsigned char* data = ImageLoader::Load(path.c_str(), &width, &height, &channels, 0);
 
-		if (data)
-		{
-			m_IsLoaded = true;
-
-			m_Width = width;
-			m_Height = height;
-
-			GLenum internalFormat = 0, dataFormat = 0;
-			if (channels == 4)
-			{
-				internalFormat = GL_RGBA8;
-				dataFormat = GL_RGBA;
-			}
-			else if (channels == 3)
-			{
-				internalFormat = GL_RGB8;
-				dataFormat = GL_RGB;
-			}
-
-			m_InternalFormat = internalFormat;
-			m_DataFormat = dataFormat;
-
-			// Guarding against this on linux due to stb_image, including Log.h after stb could work
-#ifdef LL_PLATFORM_WINDOWS
-			LL_CORE_ASSERT(internalFormat & dataFormat, "Format not supported!");
-#endif
-
-			LoadTexture(data);
+		LoadTexture(data, width, height, channels);
 			
-			ImageLoader::Free(data);
-		}
+		ImageLoader::Free(data);
+		
 	}
 
 	OpenGLTexture::~OpenGLTexture()
@@ -60,12 +37,43 @@ namespace LarkinLab
 
 	void OpenGLTexture::DeleteTexture()
 	{
+		m_IsLoaded = false;
 		glDeleteTextures(1, &m_TextureID);
 	}
 
-	void OpenGLTexture::LoadTexture(unsigned char* data)
+	void OpenGLTexture::LoadTexture(unsigned char* data, int width, int height, int channels)
 	{
-		if (m_TextureID != NULL) glDeleteTextures(1, &m_TextureID);
+		m_IsLoaded = true;
+
+		m_Width = width;
+		m_Height = height;
+
+		GLenum internalFormat = 0, dataFormat = 0;
+		if (channels == 4)
+		{
+			internalFormat = GL_RGBA8;
+			dataFormat = GL_RGBA;
+		}
+		else if (channels == 3)
+		{
+			internalFormat = GL_RGB8;
+			dataFormat = GL_RGB;
+		}
+		else if (channels == 1)
+		{
+			internalFormat = GL_R8;
+			dataFormat = GL_RED;
+		}
+
+		m_InternalFormat = internalFormat;
+		m_DataFormat = dataFormat;
+
+		// Guarding against this on linux due to stb_image, including Log.h after stb could work
+#ifdef LL_PLATFORM_WINDOWS
+		//LL_CORE_ASSERT(internalFormat & dataFormat, "Format not supported!");
+#endif
+		
+		if (m_TextureID != NULL) DeleteTexture();
 
 		glCreateTextures(GL_TEXTURE_2D, 1, &m_TextureID);
 		glTextureStorage2D(m_TextureID, 1, m_InternalFormat, m_Width, m_Height);
@@ -76,15 +84,23 @@ namespace LarkinLab
 		glTextureParameteri(m_TextureID, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 		glTextureParameteri(m_TextureID, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 
+		if (channels == 1)
+		{
+			glTextureParameteri(m_TextureID, GL_TEXTURE_SWIZZLE_G, GL_RED);
+			glTextureParameteri(m_TextureID, GL_TEXTURE_SWIZZLE_B, GL_RED);
+		}
+
 		glPixelStorei(GL_UNPACK_ALIGNMENT, 1); // THIS FIXED THE STRETCHING ISSUE
 
 		glTextureSubImage2D(m_TextureID, 0, 0, 0, m_Width, m_Height, m_DataFormat, GL_UNSIGNED_BYTE, data);
 
 	}
 
-	void OpenGLTexture::UpdateTexture(unsigned char* data)
+	void OpenGLTexture::UpdateTexture(unsigned char* data, int channels)
 	{
-		glTextureSubImage2D(m_TextureID, 0, 0, 0, m_Width, m_Height, m_DataFormat, GL_UNSIGNED_BYTE, data);
+		LoadTexture(data, m_Width, m_Height, channels);
+		//glTextureSubImage2D(m_TextureID, 0, 0, 0, m_Width, m_Height, m_DataFormat, GL_UNSIGNED_BYTE, data);
+
 	}
 
 	void OpenGLTexture::GenerateMipMap()

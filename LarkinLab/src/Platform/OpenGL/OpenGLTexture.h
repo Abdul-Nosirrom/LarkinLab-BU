@@ -5,13 +5,14 @@ namespace LarkinLab
 	class OpenGLTexture
 	{
 	public:
+		OpenGLTexture(unsigned char* data, int width, int height);
 		OpenGLTexture(const std::string& path);
 		~OpenGLTexture();
 
-		void LoadTexture(unsigned char* data);
+		void LoadTexture(unsigned char* data, int width, int height, int channels = 3);
 		void DeleteTexture();
 
-		void UpdateTexture(unsigned char* data);
+		void UpdateTexture(unsigned char* data, int channels = 3);
 
 		void GenerateMipMap();
 		void Bind(uint32_t);

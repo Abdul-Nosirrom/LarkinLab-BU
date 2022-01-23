@@ -91,6 +91,10 @@ void EditorLayer::OnImGuiRender()
 			//ImGui::MenuItem("Fullscreen", NULL, &opt_fullscreen_persistant);1
 			if (ImGui::MenuItem("Open")) showExplorer = true;
 
+			if (ImGui::MenuItem("Save")) m_ImageEditor.Save();
+
+			if (ImGui::MenuItem("Save As...")) showSave = true;
+
 			if (ImGui::MenuItem("Exit")) Application::Get().Close();
 
 			ImGui::EndMenu();
@@ -108,7 +112,8 @@ void EditorLayer::OnImGuiRender()
 	}
 
 	// Keep file explorer open
-	if (showExplorer) FileBrowser();
+	if (showExplorer)	FileBrowser();
+	if (showSave)		SaveBrowser();
 
 
 	m_ImageEditor.OnImGuiRender();
@@ -158,7 +163,7 @@ bool EditorLayer::OnKeyPressed(KeyPressedEvent& e)
 // -------- Editor GUIs ------- //
 void EditorLayer::FileBrowser()
 {
-	m_FileDialog->Open("TextureOpenDialog", "Open a texture", "Image file (*.png;*.jpg;*.jpeg;*.bmp;*.tga){.png,.jpg,.jpeg,.bmp,.tga},.*");
+	m_FileDialog->Open("TextureOpenDialog", "Open a texture", "Image file (*.tif;*.png;*.jpg;*.jpeg;*.bmp;*.tga){.tif,.png,.jpg,.jpeg,.bmp,.tga},.*");
 	if (m_FileDialog->IsDone("TextureOpenDialog")) 
 	{
 		if (m_FileDialog->HasResult()) 
@@ -168,5 +173,20 @@ void EditorLayer::FileBrowser()
 		}
 		m_FileDialog->Close();
 		showExplorer = false;
+	}
+}
+
+void EditorLayer::SaveBrowser()
+{
+	m_FileDialog->Save("SaveFileDialog", "Save file", "Image file (*.tif;*.png;*.jpg;*.jpeg;*.bmp;*.tga){.tif,.png,.jpg,.jpeg,.bmp,.tga},.*");
+	if (m_FileDialog->IsDone("SaveFileDialog"))
+	{
+		if (m_FileDialog->HasResult())
+		{
+			std::string path = m_FileDialog->GetResult().u8string();
+			m_ImageEditor.SaveAs(path);
+		}
+		m_FileDialog->Close();
+		showSave = false;
 	}
 }

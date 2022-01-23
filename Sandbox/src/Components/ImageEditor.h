@@ -13,8 +13,10 @@ public:
 
 	void LoadImageToEditor(std::string path);
 	void ShowImage(const char* window, OpenCVImage * image);
+	void Save();
+	void SaveAs(std::string path);
 
-	bool showEdit = false;
+	bool showEdit = true;
 	bool showOriginal = true;
 
 private:
@@ -29,8 +31,11 @@ private:
 	bool m_ImageLoaded = false;
 
 	// OpenCV Parameters
-	int m_GaussBlurOld = 0;
-	int m_GaussBlur = 0, m_Entre = 8, m_Threshold = 90, m_ThreshCenter = 100, m_CannyThresh = 100;
+	int m_GaussBlurOld = 1;
+	int m_GaussBlur = 1, m_Entre = 8, m_Threshold = 90, m_ThreshCenter = 100, m_CannyThresh = 100;
 
+	bool m_findCircles = false;
+	bool m_applyBlur = false;
+	bool m_findContours = false;
 };
 
