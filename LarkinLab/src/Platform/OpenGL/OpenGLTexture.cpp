@@ -98,8 +98,25 @@ namespace LarkinLab
 
 	void OpenGLTexture::UpdateTexture(unsigned char* data, int channels)
 	{
-		LoadTexture(data, m_Width, m_Height, channels);
-		//glTextureSubImage2D(m_TextureID, 0, 0, 0, m_Width, m_Height, m_DataFormat, GL_UNSIGNED_BYTE, data);
+		//LoadTexture(data, m_Width, m_Height, channels);
+
+		if (channels == 4 || channels == 3)
+		{
+			m_DataFormat = channels == 4 ? GL_RGBA : GL_RGB;
+
+			glTextureParameteri(m_TextureID, GL_TEXTURE_SWIZZLE_G, GL_GREEN);
+			glTextureParameteri(m_TextureID, GL_TEXTURE_SWIZZLE_B, GL_BLUE);
+		}
+		else if (channels == 1)
+		{
+			m_DataFormat = GL_RED;
+
+			glTextureParameteri(m_TextureID, GL_TEXTURE_SWIZZLE_G, GL_RED);
+			glTextureParameteri(m_TextureID, GL_TEXTURE_SWIZZLE_B, GL_RED);
+		}
+
+
+		glTextureSubImage2D(m_TextureID, 0, 0, 0, m_Width, m_Height, m_DataFormat, GL_UNSIGNED_BYTE, data);
 
 	}
 
